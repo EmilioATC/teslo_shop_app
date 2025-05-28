@@ -96,6 +96,7 @@ class _LoginForm extends ConsumerWidget {
 
           CustomTextFormField(
             label: 'Contraseña',
+            onFieldSubmitted: ( _ ) => ref.read(loginFormProvider.notifier).onFormSubmit(),
             obscureText: true,
             onChanged: ref.read(loginFormProvider.notifier).onPasswordChanged,
             errorMessage: loginForm.isFormPosted ?
@@ -111,9 +112,9 @@ class _LoginForm extends ConsumerWidget {
             child: CustomFilledButton(
               text: 'Ingresar',
               buttonColor: Colors.black,
-              onPressed: (){
-                ref.read(loginFormProvider.notifier).onFormSubmit();
-              },
+              onPressed: loginForm.isPosting
+                ? null 
+                : ref.read(loginFormProvider.notifier).onFormSubmit
             )
           ),
 

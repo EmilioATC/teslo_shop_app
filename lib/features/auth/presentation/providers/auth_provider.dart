@@ -18,9 +18,11 @@ final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   );
 });
 
+// Segunda parte de la implementación de la clase AuthNotifier y AuthState
 // Clase que extiende StateNotifier para manejar el estado de autenticación.
 class AuthNotifier extends StateNotifier<AuthState> {
-  // Dependencias necesarias para la autenticación.
+
+  // Estaríamos inyectando el repositorio para manejar la lógica de negocio y el servicio para el almacenamiento local
   final AuthRepository authRepository;
   final KeyValueStorageService keyValueStorageService;
 
@@ -62,7 +64,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
     try {
       // Verifica el estado de autenticación con el token.
+      // Se manda a llamar al repositorio para verificar el estado de autenticación
+      // y se obtiene el usuario autenticado
+      
       final user = await authRepository.checkAuthStatus(token);
+
       _setLoggedUser(user);
     } catch (e) {
       // Si ocurre un error, cierra sesión.
@@ -97,7 +103,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 }
 
-// Primera parte de la implementación de la clase AuthState y AuthStaus
+// Primera parte de la implementación de la clase AuthState y AuthStatus
 // Enumeración que define los posibles estados de autenticación.
 enum AuthStatus { checking, authenticated, notAuthenticated }
 
